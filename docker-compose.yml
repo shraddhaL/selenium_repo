@@ -19,6 +19,6 @@ services:
     depends_on:
       - chrome
     environment:
-      - MODULE=search-module.xml
+      - MODULE=target/search-module.xml
       - BROWSER=chrome
       - SELENIUM_HUB=selenium-hub
