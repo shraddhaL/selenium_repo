@@ -49,5 +49,15 @@ pipeline {
             }
         }
 	    
+	    stage('test_selenium') {
+            steps {
+                script {
+			sh 'mvn test'
+			
+                }
+            }
+        }
+	    
+	    
 }
 }
