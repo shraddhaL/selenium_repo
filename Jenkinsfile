@@ -41,7 +41,7 @@ pipeline {
 	       stage('compose') {
             steps {
                 script {
-			docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome
+			sh 'docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome'
                 	//sh 'docker-compose up'
 			sh 'mvn test'
 			
