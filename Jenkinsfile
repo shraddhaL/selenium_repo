@@ -32,29 +32,18 @@ pipeline {
 					app.push("latest")
 				}
 			
-			
-			
-			/*env.   docker.withRegistry('https://registry.hub.docker.com', 'shraddhal/seleniumtest') {
-			        	app.push("${BUILD_NUMBER}")
-			            app.push("latest")
-			        }
-			*/
-			
-	//		 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-        //     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-        //     sh 'docker push ${dockerTag}
-			
-			/*// code placeholder
-stage('Push image') {
-/* Finally, we'll push the image with two tags:
-* First, the incremental build number from Jenkins
-* Second, the 'latest' tag. */
-
-	
-			
                 }
             }
         }        
     }
+	    
+	       stage('compose') {
+            steps {
+                script {
+                	sh ' docker-compose up'
+                }
+            }
+        }
+	    
 }
 }
