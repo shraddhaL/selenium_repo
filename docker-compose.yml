@@ -13,12 +13,3 @@ services:
     environment:
       - HUB_PORT_4444_TCP_ADDR=selenium-hub
       - HUB_PORT_4444_TCP_PORT=4444
-  search-module:
-    image: shraddhal/seleniumtest
-    container_name: search-module
-    depends_on:
-      - chrome
-    environment:
-      - MODULE=target/search-module.xml
-      - BROWSER=chrome
-      - SELENIUM_HUB=selenium-hub
