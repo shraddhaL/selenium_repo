@@ -19,8 +19,6 @@ public class BaseTest {
         
         DesiredCapabilities dc = DesiredCapabilities.chrome();
 
-        if (System.getProperty("browser").equals("firefox"))
-            dc = DesiredCapabilities.firefox();
 
         String host = System.getProperty("seleniumHubHost");
         
