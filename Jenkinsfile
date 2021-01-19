@@ -41,7 +41,13 @@ pipeline {
 	       stage('compose') {
             steps {
                 script {
-                	sh ' docker-compose up'
+                	sh 'docker-compose up'
+			sh ' docker run -d selenium-node-chrome'
+			
+			def remoteUrl = "http://localhost:4444/wd/hub";
+                        def driver = new RemoteWebDriver(new Uri(remoteUrl), options);
+			sh 'mvn test'
+			
                 }
             }
         }
