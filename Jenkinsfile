@@ -42,7 +42,6 @@ pipeline {
             steps {
                 script {
                 	sh 'docker-compose up'
-			sh ' docker run -d selenium-node-chrome'
 			sh 'mvn test'
 			
                 }
