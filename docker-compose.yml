@@ -6,8 +6,6 @@ services:
     container_name: selenium-hub
     ports:
       - "4444:4444"
-    expose: 
-      - 4444
   chrome:
     image: selenium/node-chrome
     container_name: selenium-node-chrome
@@ -18,5 +16,5 @@ services:
     depends_on:
       - selenium-hub
     environment:
-      - HUB_PORT_4444_TCP_ADDR=selenium-hub
-      - HUB_PORT_4444_TCP_PORT=4444
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
