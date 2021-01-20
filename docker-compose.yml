@@ -22,7 +22,7 @@ services:
       - JAVA_OPTS=-Dwebdriver.chrome.whitelistedIps=
       - NODE_MAX_INSTANCE=1
       - NODE_MAX_SESSION=1
-      networks:
+    networks:
       - selenium
 networks:
   selenium:
