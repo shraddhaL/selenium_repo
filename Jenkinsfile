@@ -17,8 +17,8 @@ pipeline {
 	    
 	     stage('Build Jar') {
             steps {
-		   	 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
-        		 sh 'docker system prune --all --volumes --force'
+		   	// sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
+        		 //sh 'docker system prune --all --volumes --force'
 	         sh 'mvn clean package -DskipTests'
             }
         }
