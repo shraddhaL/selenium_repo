@@ -53,8 +53,7 @@ pipeline {
 			//sh 'mvn test'
 			
                 }
-		    
-            }post {
+		    post {
           always {
             script {
               allure([
@@ -67,7 +66,11 @@ pipeline {
             }
           }
         }
+	    }
+         
         }
+	    
+	    
 	stage('Execute') {
 		 steps {
                 script {
