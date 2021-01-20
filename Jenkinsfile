@@ -9,10 +9,23 @@ pipeline {
         dockerTag = "${containerName}:${container_version}"
     }
     stages { 	
-        stage('Build Jar') {
+        
+	       stage('compose') {
             steps {
-	   sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true) || docker system prune --all --volumes --force'
-                sh 'mvn clean package -DskipTests'
+                script {
+			//sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
+			 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true) || docker system prune --all --volumes --force'
+         
+                	sh 'docker-compose up -d'
+			//sh 'mvn test'
+			
+                }
+            }
+        }
+	    
+	     stage('Build Jar') {
+            steps {
+	         sh 'mvn clean package'
             }
         }
         stage('Build Image') {
@@ -33,23 +46,34 @@ pipeline {
 					app.push("latest")
 				}
 			
-                }
-            }
-        }        
-    }
+             		   }
+         	   }
+	      }        
+   	 }
+	   
 	    
-	       stage('compose') {
-            steps {
-                script {
-			//sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
-                	sh 'docker-compose up -d'
-			//sh 'mvn test'
-			
-                }
-            }
-        }
+	stage('Execute') {
+		/* Execute the pytest script. On faliure proceed to next step */
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+      
+                sh 'docker run --network="host" --rm -v ${WORKSPACE}/allure-results:/AllureReports pytest-with-src --executor "remote" --browser "chrome" .'
+       
+      		  }
+  	 }
+ 
 	    
 	    
+	 stage('Docker Teardown') {
+    		/* Tear down docker compose */
+           sh 'docker-compose down'
+   	 }    
+    
+	    
+	   stage('Create Report') {
+        /* Generate Allure Report */
+        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+  	  }
+  
 	    
 }
 }
