@@ -12,7 +12,7 @@ pipeline {
         stage('Build Jar') {
             steps {
 	   // sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true) || docker system prune --all --volumes --force'
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean test package'
             }
         }
         stage('Build Image') {
@@ -43,7 +43,7 @@ pipeline {
                 script {
 			sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
                 	//sh 'docker-compose up'
-			sh 'mvn test'
+			//sh 'mvn test'
 			
                 }
             }
