@@ -9,9 +9,11 @@ pipeline {
         dockerTag = "${containerName}:${container_version}"
     }
     stages { 	
-	    stage('Clone repository') { /* Clone repository */ checkout scm }
+	    stage('Clone repository') { /
+			   steps {	       
+				       * Clone repository */ checkout scm }
         
-	     
+			   }
 	    
 	     stage('Build Jar') {
             steps {
