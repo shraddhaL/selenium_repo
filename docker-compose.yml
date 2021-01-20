@@ -9,7 +9,7 @@ services:
       - "4443:4443"
       - "4444:4444"
   chrome:
-    image: selenium/standalone-chrome:3.4.0-einsteinium
+    image: node-chrome:4.0.0-beta-1-prerelease-20210114
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
