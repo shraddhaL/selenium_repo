@@ -61,7 +61,7 @@ pipeline {
 		/* Execute the pytest script. On faliure proceed to next step */
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
       
-                sh 'docker run --network="host" --rm -v ${WORKSPACE}/allure-results:/AllureReports shraddhal/seleniumtest --executor "remote" --browser "chrome" .'
+                sh 'docker run --network="host" --rm --executor "remote" --browser "chrome" .'
        
 	}}}
   	 }
