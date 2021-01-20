@@ -1,5 +1,5 @@
 
-version: "3"
+version: "2.4"
 services:
   selenium-hub:
     image: selenium/hub:4.0.0-beta-1-prerelease-20210114
