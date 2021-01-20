@@ -11,18 +11,7 @@ pipeline {
     stages { 	
 	    stage('Clone repository') { /* Clone repository */ checkout scm }
         
-	       stage('compose') {
-            steps {
-                script {
-			//sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
-			 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
-        		 sh 'docker system prune --all --volumes --force'
-                	sh 'docker-compose up -d'
-			//sh 'mvn test'
-			
-                }
-            }
-        }
+	     
 	    
 	     stage('Build Jar') {
             steps {
@@ -52,14 +41,25 @@ pipeline {
 	      }        
    	 }
 	   
-	    
+	      stage('compose') {
+            steps {
+                script {
+			//sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
+			 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
+        		 sh 'docker system prune --all --volumes --force'
+                	sh 'docker-compose up -d'
+			//sh 'mvn test'
+			
+                }
+            }
+        }
 	stage('Execute') {
 		 steps {
                 script {
 		/* Execute the pytest script. On faliure proceed to next step */
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
       
-                sh 'docker run --network="host" --rm -v ${WORKSPACE}/allure-results:/AllureReports pytest-with-src --executor "remote" --browser "chrome" .'
+                sh 'docker run --network="host" --rm -v ${WORKSPACE}/allure-results:/AllureReports shraddhal/seleniumtest --executor "remote" --browser "chrome" .'
        
 	}}}
   	 }
