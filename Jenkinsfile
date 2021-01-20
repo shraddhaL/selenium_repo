@@ -14,8 +14,8 @@ pipeline {
             steps {
                 script {
 			//sh 'docker run -d -p 4444:4444 --memory="1.5g" --memory-swap="2g" -v /dev/shm:/dev/shm selenium/standalone-chrome'
-			 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true) || docker system prune --all --volumes --force'
-         
+			 sh'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
+        		 sh 'docker system prune --all --volumes --force'
                 	sh 'docker-compose up -d'
 			//sh 'mvn test'
 			
