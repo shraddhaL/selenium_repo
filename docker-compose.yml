@@ -9,10 +9,7 @@ services:
       - "4443:4443"
       - "4444:4444"
   chrome:
-    image: selenium/node-chrome
-    container_name: selenium-node-chrome
-    ports:
-      - "5900:5900"
+    image: selenium/node-chrome:4.0.0-beta-1-prerelease-20210114
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
@@ -20,3 +17,9 @@ services:
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    ports:
+      - "5900:5900"
+      - "6900:5900"
