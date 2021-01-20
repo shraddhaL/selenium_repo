@@ -88,7 +88,8 @@ pipeline {
 		}}}
   
 	    
-}  post {
+}  
+post {
           always {
             script {
               allure([
@@ -100,5 +101,5 @@ pipeline {
               ])
             }
           }
-        }
+        }	
 }
