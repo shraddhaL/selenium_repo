@@ -53,7 +53,20 @@ pipeline {
 			//sh 'mvn test'
 			
                 }
+		    
+            }post {
+          always {
+            script {
+              allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+              ])
             }
+          }
+        }
         }
 	stage('Execute') {
 		 steps {
@@ -61,7 +74,7 @@ pipeline {
 		/* Execute the pytest script. On faliure proceed to next step */
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
       
-                sh 'docker run --network="host" --rm --executor "remote" --browser "chrome" .'
+                sh 'docker run --network="host" --rm -v target/allure-results:/AllureReports pytest-with-src  --browser "chrome" .'
        
 	}}}
   	 }
