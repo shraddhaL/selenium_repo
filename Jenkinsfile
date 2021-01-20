@@ -53,19 +53,7 @@ pipeline {
 			//sh 'mvn test'
 			
                 }
-		    post {
-          always {
-            script {
-              allure([
-                includeProperties: false,
-                jdk: '',
-                properties: [],
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'target/allure-results']]
-              ])
-            }
-          }
-        }
+		    
 	    }
          
         }
@@ -100,5 +88,17 @@ pipeline {
 		}}}
   
 	    
-}
+}  post {
+          always {
+            script {
+              allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+              ])
+            }
+          }
+        }
 }
