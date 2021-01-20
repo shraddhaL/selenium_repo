@@ -53,26 +53,32 @@ pipeline {
 	   
 	    
 	stage('Execute') {
+		 steps {
+                script {
 		/* Execute the pytest script. On faliure proceed to next step */
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
       
                 sh 'docker run --network="host" --rm -v ${WORKSPACE}/allure-results:/AllureReports pytest-with-src --executor "remote" --browser "chrome" .'
        
-      		  }
+	}}}
   	 }
  
 	    
 	    
 	 stage('Docker Teardown') {
     		/* Tear down docker compose */
+		  steps {
+                script {
            sh 'docker-compose down'
-   	 }    
+		}    }}
     
 	    
 	   stage('Create Report') {
+		    steps {
+                script {
         /* Generate Allure Report */
         allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-  	  }
+		}}}
   
 	    
 }
