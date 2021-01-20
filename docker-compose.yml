@@ -9,7 +9,7 @@ services:
       - "4443:4443"
       - "4444:4444"
   chrome:
-    image: node-chrome:4.0.0-beta-1-prerelease-20210114
+    image: selenium/node-chrome
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
