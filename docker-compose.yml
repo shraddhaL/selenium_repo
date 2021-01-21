@@ -2,14 +2,14 @@
 version: "2.4"
 services:
   selenium-hub:
-    image: selenium/hub:4.0.0-beta-1-prerelease-20210114
+    image: selenium/hub
     container_name: selenium-hub
     ports:
       - "4545:4444"
     networks:
       - selenium
   chrome:
-    image: selenium/node-chrome-debug
+    image: selenium/node-chrome
     volumes:
       - /dev/shm:/dev/shm
     links:
