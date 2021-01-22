@@ -2,6 +2,7 @@ pipeline {
      agent any
 	 tools {
         maven 'Maven' 
+		 docker 'docker'
     }
 	 environment {
         containerName = "shraddhal/seleniumtest"
